@@ -7,12 +7,12 @@ import { FaGithub, FaExternalLinkAlt, FaCode, FaRobot, FaMobileAlt, FaGraduation
 
 const projects = [
   {
-    title: 'SOLFA ML System',
-    description: 'Led a team to develop 4+ internal ML projects with a custom model.',
-    image: '/projects/solfa.png',
-    github: 'https://github.com/albaker/solfa-ml',
-    live: 'https://solfa.dev',
-    icon: <FaRobot className="text-2xl text-blue-500" />
+    title: 'FixMate',
+    description: 'A Flutter Project Integrated with Firebase & AI Chatbot Support. I developed this mobile application using Flutter to support my brother in his work as a machine repair technician. The app allows him to efficiently manage and store customer data using Firebase for secure and real-time cloud storage. To further assist him on the job, I integrated a chatbot feature that helps identify machine issues by entering the machine code, the chatbot responds with detailed information about the machine, possible issues, and solutions. This project demonstrates my ability to build practical, user-focused applications that solve real-world problems through smart integration of technologies like Firebase and AI.',
+    image: '/images/mobile-app.jpg',
+    github: 'https://github.com/AlbakerAMA/FixMate.git',
+    live: null,
+    icon: <FaMobileAlt className="text-2xl text-blue-500" />
   },
   {
     title: 'FootPrints Smart Shopper',
@@ -25,7 +25,7 @@ const projects = [
   {
     title: 'HTA e-Learning Platform',
     description: 'Built an accessible platform for students with disabilities.',
-    image: null, // No image available
+    image: "/images/web-app.jpg", // No image available
     github: 'https://github.com/albaker/hta-elearning',
     live: null, // No live site
     icon: <FaGraduationCap className="text-2xl text-purple-500" />
@@ -33,10 +33,10 @@ const projects = [
   {
     title: 'Workflow Automation',
     description: 'Automated alerts and system flows with Node-RED, n8n, WhatsApp + Sheets.',
-    image: null, // No image available
+    image: '/images/ML.jpg', // No image available
     github: null, // No GitHub available
     live: null, // No live site
-    icon: <FaCogs className="text-2xl text-orange-500" />
+    icon: <FaRobot className="text-2xl text-orange-500" />     // FaCogs
   }
 ]
 
