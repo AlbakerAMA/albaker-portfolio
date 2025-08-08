@@ -15,12 +15,12 @@ const projects = [
     icon: <FaMobileAlt className="text-2xl text-blue-500" />
   },
   {
-    title: 'FootPrints Smart Shopper',
-    description: 'AI-powered Flutter app with Firebase backend and full-stack web store.',
-    image: '/projects/footprints.png',
+    title: 'FootPrints web app',
+    description: 'Footprints web application is a part of the Student Enterprise Program at the African Leadership Academy (ALA). Footprints is an e-commerce platform designed to showcase and sell merchandise created by the student-led brand. The platform allows users to browse products, view details, and place orders seamlessly. The project aimed to give students real-world experience in managing a business while offering a functional, modern digital storefront. I focused on creating a clean user interface, smooth shopping experience, and scalable architecture to support the enterprise’s growth.',
+    image: '/images/web-app.jpg',
     github: null, // No GitHub available
-    live: 'https://footprints.dev',
-    icon: <FaMobileAlt className="text-2xl text-green-500" />
+    live: 'https://footprints.alastudents.org/',
+    icon: <FaWeb className="text-2xl text-green-500" />
   },
   {
     title: 'HTA e-Learning Platform',
