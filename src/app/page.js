@@ -6,10 +6,44 @@ import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 
+const socialIcons = [
+  {
+    href: 'https://github.com/albaker',
+    icon: <FaGithub />,
+    color: 'text-black dark:text-white',
+  },
+  {
+    href: 'https://linkedin.com/in/albaker',
+    icon: <FaLinkedin />,
+    color: 'text-blue-600 dark:text-blue-400',
+  },
+  {
+    href: 'https://instagram.com',
+    icon: <FaInstagram />,
+    color: 'text-pink-500',
+  },
+  {
+    href: 'https://facebook.com',
+    icon: <FaFacebook />,
+    color: 'text-blue-700',
+  },
+]
+
+// Generate random positions near the photo
+function getRandomPositions(count) {
+  
+  return Array.from({ length: count }, () => ({
+    top: `${30 + Math.random() * 40}%`,
+    left: `${20 + Math.random() * 60}%`,
+    right: `${20 + Math.random() * 60}%`,
+  }))
+}
+
 export default function HomePage() {
   const [typedText, setTypedText] = useState('')
   const fullText = "Hi, I'm Albaker Ahmed"
-  
+  const [iconPositions, setIconPositions] = useState(getRandomPositions(socialIcons.length))
+
   useEffect(() => {
     let i = 0
     const typingInterval = setInterval(() => {
@@ -56,7 +90,7 @@ export default function HomePage() {
       </div>
       <div className="flex-1 relative w-[300px] h-[450px] md:w-[400px] md:h-[550px] mx-auto">
         <motion.div
-          className="relative w-full h-full"
+          className="relative w-full h-full pointer-events-none"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1 }}
@@ -68,71 +102,67 @@ export default function HomePage() {
             className="rounded-full shadow-lg object-cover"
             priority
           />
-          
-          {/* Orbiting social icons */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+        </motion.div>
+        {/* Orbiting social icons */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+        >
+          <a
+            href="https://github.com/albaker"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute text-4xl text-black dark:text-white hover:scale-125 transition-transform pointer-events-auto"
+            style={{ top: '0%', left: '50%', transform: 'translate(-50%, -50%)' }}
           >
-            <a
-              href="https://github.com/albaker"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute text-2xl text-black dark:text-white hover:scale-125 transition-transform"
-              style={{ top: '0%', left: '50%', transform: 'translate(-50%, -50%)' }}
-            >
-              <FaGithub />
-            </a>
-          </motion.div>
-          
-          <motion.div
-            className="absolute inset-0"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+            <FaGithub />
+          </a>
+        </motion.div>
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+        >
+          <a
+            href="https://linkedin.com/in/albaker"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute text-4xl text-blue-600 dark:text-blue-400 hover:scale-125 transition-transform pointer-events-auto"
+            style={{ top: '50%', left: '0%', transform: 'translate(-50%, -50%)' }}
           >
-            <a
-              href="https://linkedin.com/in/albaker"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute text-2xl text-blue-600 dark:text-blue-400 hover:scale-125 transition-transform"
-              style={{ top: '50%', left: '0%', transform: 'translate(-50%, -50%)' }}
-            >
-              <FaLinkedin />
-            </a>
-          </motion.div>
-          
-          <motion.div
-            className="absolute inset-0"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+            <FaLinkedin />
+          </a>
+        </motion.div>
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+        >
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute text-4xl text-pink-500 hover:scale-125 transition-transform pointer-events-auto"
+            style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}
           >
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute text-2xl text-pink-500 hover:scale-125 transition-transform"
-              style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}
-            >
-              <FaInstagram />
-            </a>
-          </motion.div>
-          
-          <motion.div
-            className="absolute inset-0"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+            <FaInstagram />
+          </a>
+        </motion.div>
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+        >
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute text-4xl text-blue-700 hover:scale-125 transition-transform pointer-events-auto"
+            style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}
           >
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute text-2xl text-blue-700 hover:scale-125 transition-transform"
-              style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}
-            >
-              <FaFacebook />
-            </a>
-          </motion.div>
+            <FaFacebook />
+          </a>
         </motion.div>
       </div>
     </section>
