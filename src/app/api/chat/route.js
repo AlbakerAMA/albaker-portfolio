@@ -37,11 +37,11 @@ export async function POST(req) {
       headers: {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'http://localhost:3000/', // Required by OpenRouter
+        'HTTP-Referer': 'https://albaker-portfolio.vercel.app/', // Required by OpenRouter
         'X-Title': 'Albaker Portfolio' // Optional but recommended
       },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo", // Or any model from openrouter.ai/models
+        model: "openai/gpt-oss-20b:free", // Or any model from openrouter.ai/models
         messages: [
           {
             role: "system",
