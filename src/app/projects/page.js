@@ -3,9 +3,19 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FaGithub, FaExternalLinkAlt, FaCode, FaRobot, FaMobileAlt, FaGraduationCap, FaCogs } from 'react-icons/fa'
+import { FaGithub, FaExternalLinkAlt, FaCode, FaRobot, FaMobileAlt, FaGraduationCap, FaCogs, FaGlobe } from 'react-icons/fa'
 
 const projects = [
+
+   {
+    title: 'SOLFA web app',
+    description: 'Footprints web application is a part of the Student Enterprise Program at the African Leadership Academy (ALA). Footprints is an e-commerce platform designed to showcase and sell merchandise created by the student-led brand. The platform allows users to browse products, view details, and place orders seamlessly. The project aimed to give students real-world experience in managing a business while offering a functional, modern digital storefront. I focused on creating a clean user interface, smooth shopping experience, and scalable architecture to support the enterprise’s growth.',
+    image: '/images/web-app.jpg',
+    github: null, // No GitHub available
+    live: 'https://footprints.alastudents.org/',
+    icon: <FaGlobe className="text-2xl text-green-500" />
+  },
+
   {
     title: 'FixMate',
     description: 'A Flutter Project Integrated with Firebase & AI Chatbot Support. I developed this mobile application using Flutter to support my brother in his work as a machine repair technician. The app allows him to efficiently manage and store customer data using Firebase for secure and real-time cloud storage. To further assist him on the job, I integrated a chatbot feature that helps identify machine issues by entering the machine code, the chatbot responds with detailed information about the machine, possible issues, and solutions. This project demonstrates my ability to build practical, user-focused applications that solve real-world problems through smart integration of technologies like Firebase and AI.',
@@ -20,8 +30,9 @@ const projects = [
     image: '/images/web-app.jpg',
     github: null, // No GitHub available
     live: 'https://footprints.alastudents.org/',
-    icon: <FaWeb className="text-2xl text-green-500" />
+    icon: <FaGlobe className="text-2xl text-green-500" />
   },
+ 
   {
     title: 'HTA e-Learning Platform',
     description: 'Built an accessible platform for students with disabilities.',
@@ -29,6 +40,14 @@ const projects = [
     github: 'https://github.com/albaker/hta-elearning',
     live: null, // No live site
     icon: <FaGraduationCap className="text-2xl text-purple-500" />
+  },
+    {
+    title: 'FootPrints Mobile App',
+    description: 'A Flutter Project Integrated with Firebase & AI Chatbot Support. I developed this mobile application using Flutter to support my brother in his work as a machine repair technician. The app allows him to efficiently manage and store customer data using Firebase for secure and real-time cloud storage. To further assist him on the job, I integrated a chatbot feature that helps identify machine issues by entering the machine code, the chatbot responds with detailed information about the machine, possible issues, and solutions. This project demonstrates my ability to build practical, user-focused applications that solve real-world problems through smart integration of technologies like Firebase and AI.',
+    image: '/images/mobile-app.jpg',
+    github: 'https://github.com/AlbakerAMA/FixMate.git',
+    live: null,
+    icon: <FaMobileAlt className="text-2xl text-blue-500" />
   },
   {
     title: 'Workflow Automation',
