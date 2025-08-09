@@ -43,9 +43,9 @@ const projects = [
   },
     {
     title: 'FootPrints Mobile App',
-    description: 'A Flutter Project Integrated with Firebase & AI Chatbot Support. I developed this mobile application using Flutter to support my brother in his work as a machine repair technician. The app allows him to efficiently manage and store customer data using Firebase for secure and real-time cloud storage. To further assist him on the job, I integrated a chatbot feature that helps identify machine issues by entering the machine code, the chatbot responds with detailed information about the machine, possible issues, and solutions. This project demonstrates my ability to build practical, user-focused applications that solve real-world problems through smart integration of technologies like Firebase and AI.',
+    description: 'I developed the Footprints mobile application to extend the reach of the African Leadership Academy’s student-led brand into the mobile space. The app allows customers to conveniently browse and purchase Footprints merchandise directly from their smartphones. It features a user-friendly interface, secure order handling, and a smooth checkout process, ensuring a consistent shopping experience across devices. By bringing the store to mobile, this project enhanced accessibility, boosted engagement, and supported the Student Enterprise’s mission of building entrepreneurial skills among students.',
     image: '/images/mobile-app.jpg',
-    github: 'https://github.com/AlbakerAMA/FixMate.git',
+    github: 'https://github.com/AlbakerAMA/FootPrintsApp',
     live: null,
     icon: <FaMobileAlt className="text-2xl text-blue-500" />
   },
