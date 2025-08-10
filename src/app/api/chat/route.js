@@ -1,5 +1,4 @@
-// Force dynamic rendering to avoid caching issues
-export const dynamic = 'force-dynamic';
+// Remove dynamic export since we're not using static export anymore
 export const runtime = 'nodejs';
 
 const systemPrompt = `
@@ -32,7 +31,6 @@ Rules:
 `;
 
 export async function POST(request) {
-  // Add detailed logging for Vercel
   console.log("🚀 POST route handler called");
   console.log("Environment check - API Key exists:", !!process.env.OPENROUTER_API_KEY);
   
@@ -41,7 +39,7 @@ export async function POST(request) {
     let body;
     try {
       const text = await request.text();
-      console.log("📥 Raw request text:", text.substring(0, 200) + "...");
+      console.log("📥 Raw request received, length:", text.length);
       body = JSON.parse(text);
     } catch (parseError) {
       console.error("❌ JSON parse error:", parseError);
@@ -94,7 +92,7 @@ export async function POST(request) {
         headers: {
           "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "https://albaker-portfolio.vercel.app",
+          "HTTP-Referer": process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://albaker-portfolio.vercel.app",
           "X-Title": "Albaker Portfolio"
         },
         body: JSON.stringify({
@@ -103,7 +101,7 @@ export async function POST(request) {
             { role: "system", content: systemPrompt },
             ...messages
           ],
-          max_tokens: 300,
+          max_tokens: 500,
           temperature: 0.7
         }),
         signal: controller.signal
@@ -192,7 +190,8 @@ export async function GET() {
     JSON.stringify({ 
       message: "Chat API is running",
       timestamp: new Date().toISOString(),
-      hasApiKey: !!process.env.OPENROUTER_API_KEY
+      hasApiKey: !!process.env.OPENROUTER_API_KEY,
+      environment: process.env.NODE_ENV
     }),
     { 
       status: 200,
