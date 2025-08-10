@@ -1,22 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
+  // Removed static export to enable API routes
+  // output: 'export',  // <- This line should be removed or commented out
+  
+  // Keep images unoptimized if you were using it for static export
   images: {
     unoptimized: true,
   },
   
-
+  // Optional: Add trailing slash if you prefer
   trailingSlash: false,
   
-  
+  // Optional: Optimize for production
   swcMinify: true,
   
-
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
-  
-  
+  // Optional: Headers for security and CORS
   async headers() {
     return [
       {
@@ -32,4 +30,5 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+
+export default nextConfig;
