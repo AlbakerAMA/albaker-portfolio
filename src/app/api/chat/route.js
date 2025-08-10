@@ -1,4 +1,4 @@
-export const runtime = 'nodejs'; // Ensure Node.js runtime for process.env access
+export const runtime = 'nodejs'; // Ensure Node.js runtime
 
 const systemPrompt = `
 You are Albaker Ahmed's AI assistant. Respond professionally but conversationally. Key facts about Albaker:
@@ -30,28 +30,40 @@ Rules:
 `;
 
 export async function POST(req) {
-  const { messages } = await req.json();
+  console.log("✅ API route hit");
 
-  // Debugging env variable
+  let body;
+  try {
+    body = await req.json();
+    console.log("📩 Request body received:", body);
+  } catch (err) {
+    console.error("❌ Failed to parse request JSON:", err);
+    return Response.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const { messages } = body || {};
+  if (!messages || !Array.isArray(messages)) {
+    console.error("❌ No valid 'messages' array in request body");
+    return Response.json({ error: "Missing 'messages' array" }, { status: 400 });
+  }
+
   if (!process.env.OPENROUTER_API_KEY) {
-    console.error("❌ Missing OPENROUTER_API_KEY in environment variables");
-    return Response.json(
-      { reply: "Server configuration error: Missing API key." },
-      { status: 500 }
-    );
+    console.error("❌ Missing OPENROUTER_API_KEY in environment");
+    return Response.json({ error: "Server missing API key" }, { status: 500 });
   }
 
   try {
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
+    console.log("🌐 Sending request to OpenRouter API...");
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'Content-Type': 'application/json',
-        'Referer': 'https://albaker-portfolio.vercel.app', 
-        'X-Title': 'Albaker Portfolio' // Optional but recommended
+        Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+        Referer: "https://albaker-portfolio.vercel.app", // Correct header name
+        "X-Title": "Albaker Portfolio"
       },
       body: JSON.stringify({
-        model: "openai/gpt-oss-20b:free",
+        model: "openai/gpt-3.5-turbo", // Safer test model
         messages: [
           { role: "system", content: systemPrompt },
           ...messages
@@ -59,18 +71,23 @@ export async function POST(req) {
       })
     });
 
+    console.log("📡 OpenRouter status:", response.status);
+    const data = await response.json().catch(() => null);
+    console.log("📦 OpenRouter raw response:", data);
+
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error("❌ OpenRouter API Error:", errorData);
-      throw new Error(errorData.message || `OpenRouter request failed with status ${response.status}`);
+      return Response.json(
+        { error: "OpenRouter API error", details: data },
+        { status: response.status }
+      );
     }
 
-    const data = await response.json();
-    return Response.json({ reply: data.choices?.[0]?.message?.content || "No reply generated." });
+    return Response.json({ reply: data?.choices?.[0]?.message?.content || "No reply from model" });
+
   } catch (error) {
-    console.error('❌ Server Error:', error);
+    console.error("❌ Unexpected server error:", error);
     return Response.json(
-      { reply: "Sorry, I'm having trouble responding. Please try again later." },
+      { error: "Unexpected server error", details: error.message },
       { status: 500 }
     );
   }
