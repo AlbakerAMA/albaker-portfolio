@@ -46,7 +46,7 @@ export default function Navbar() {
 
         {/* Right side - Social + Dark mode (desktop) */}
         <div className="hidden md:flex items-center space-x-4">
-          <a href="https://github.com/albaker" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">
+          <a href="https://github.com/AlbakerAMA" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">
             <FaGithub className="w-5 h-5" />
           </a>
           <a href="https://linkedin.com/in/albaker" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">
@@ -106,7 +106,7 @@ export default function Navbar() {
               Contact
             </Link>
             <div className="flex items-center space-x-4 pt-2">
-              <a href="https://github.com/albaker" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">
+              <a href="https://github.com/AlbakerAMA" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">
                 <FaGithub className="w-5 h-5" />
               </a>
               <a href="https://linkedin.com/in/albaker" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">

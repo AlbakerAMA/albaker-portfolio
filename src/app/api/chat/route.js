@@ -35,7 +35,7 @@ export async function POST(request) {
   console.log("Environment check - API Key exists:", !!process.env.OPENROUTER_API_KEY);
   
   try {
-    // Parse request with better error handling
+    
     let body;
     try {
       const text = await request.text();
@@ -184,18 +184,3 @@ export async function POST(request) {
   }
 }
 
-// Add a simple GET method for testing
-export async function GET() {
-  return new Response(
-    JSON.stringify({ 
-      message: "Chat API is running",
-      timestamp: new Date().toISOString(),
-      hasApiKey: !!process.env.OPENROUTER_API_KEY,
-      environment: process.env.NODE_ENV
-    }),
-    { 
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    }
-  );
-}

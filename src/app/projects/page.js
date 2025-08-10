@@ -33,14 +33,14 @@ const projects = [
     icon: <FaGlobe className="text-2xl text-green-500" />
   },
  
-  {
-    title: 'HTA e-Learning Platform',
-    description: 'Built an accessible platform for students with disabilities.',
-    image: "/images/web-app.jpg", // No image available
-    github: null,
-    live: null, // No live site
-    icon: <FaGraduationCap className="text-2xl text-purple-500" />
-  },
+  // {
+  //   title: 'HTA e-Learning Platform',
+  //   description: 'Built an accessible platform for students with disabilities.',
+  //   image: "/images/web-app.jpg", // No image available
+  //   github: null,
+  //   live: null, // No live site
+  //   icon: <FaGraduationCap className="text-2xl text-purple-500" />
+  // },
     {
     title: 'FootPrints Mobile App',
     description: 'I developed the Footprints mobile application to extend the reach of the African Leadership Academy’s student-led brand into the mobile space. The app allows customers to conveniently browse and purchase Footprints merchandise directly from their smartphones. It features a user-friendly interface, secure order handling, and a smooth checkout process, ensuring a consistent shopping experience across devices. By bringing the store to mobile, this project enhanced accessibility, boosted engagement, and supported the Student Enterprise’s mission of building entrepreneurial skills among students.',
