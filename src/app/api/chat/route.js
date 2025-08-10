@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'; // Ensure Node.js runtime for process.env access
+
 const systemPrompt = `
 You are Albaker Ahmed's AI assistant. Respond professionally but conversationally. Key facts about Albaker:
 
@@ -27,9 +29,17 @@ Rules:
 3. Keep responses under 3 sentences unless asked for detail
 `;
 
-
 export async function POST(req) {
   const { messages } = await req.json();
+
+  // Debugging env variable
+  if (!process.env.OPENROUTER_API_KEY) {
+    console.error("❌ Missing OPENROUTER_API_KEY in environment variables");
+    return Response.json(
+      { reply: "Server configuration error: Missing API key." },
+      { status: 500 }
+    );
+  }
 
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -41,26 +51,24 @@ export async function POST(req) {
         'X-Title': 'Albaker Portfolio' // Optional but recommended
       },
       body: JSON.stringify({
-        model: "openai/gpt-oss-20b:free", // Or any model from openrouter.ai/models
+        model: "openai/gpt-oss-20b:free",
         messages: [
-          {
-            role: "system",
-            content: systemPrompt
-          },
+          { role: "system", content: systemPrompt },
           ...messages
         ]
       })
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Failed to fetch from OpenRouter');
+      const errorData = await response.json().catch(() => ({}));
+      console.error("❌ OpenRouter API Error:", errorData);
+      throw new Error(errorData.message || `OpenRouter request failed with status ${response.status}`);
     }
 
     const data = await response.json();
-    return Response.json({ reply: data.choices[0].message.content });
+    return Response.json({ reply: data.choices?.[0]?.message?.content || "No reply generated." });
   } catch (error) {
-    console.error('OpenRouter Error:', error);
+    console.error('❌ Server Error:', error);
     return Response.json(
       { reply: "Sorry, I'm having trouble responding. Please try again later." },
       { status: 500 }
