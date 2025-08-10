@@ -47,7 +47,7 @@ export async function POST(req) {
       headers: {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://albaker-portfolio.vercel.app', // Required by OpenRouter
+        'Referer': 'https://albaker-portfolio.vercel.app', 
         'X-Title': 'Albaker Portfolio' // Optional but recommended
       },
       body: JSON.stringify({
