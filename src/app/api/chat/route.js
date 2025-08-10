@@ -1,3 +1,5 @@
+// Force dynamic rendering to avoid caching issues
+export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 const systemPrompt = `
@@ -29,97 +31,172 @@ Rules:
 3. Keep responses under 3 sentences unless asked for detail
 `;
 
-export async function POST(req) {
+export async function POST(request) {
+  // Add detailed logging for Vercel
+  console.log("🚀 POST route handler called");
+  console.log("Environment check - API Key exists:", !!process.env.OPENROUTER_API_KEY);
+  
   try {
-    console.log("✅ API route hit");
-
-    // Parse request body
+    // Parse request with better error handling
     let body;
     try {
-      body = await req.json();
-      console.log("📩 Request body received:", body);
-    } catch (err) {
-      console.error("❌ Failed to parse request JSON:", err);
-      return new Response(
-        JSON.stringify({ error: "Invalid JSON body" }), 
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const { messages } = body || {};
-    if (!messages || !Array.isArray(messages)) {
-      console.error("❌ No valid 'messages' array in request body");
-      return new Response(
-        JSON.stringify({ error: "Missing 'messages' array" }), 
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Check API key
-    if (!process.env.OPENROUTER_API_KEY) {
-      console.error("❌ Missing OPENROUTER_API_KEY in environment");
-      return new Response(
-        JSON.stringify({ error: "Server missing API key" }), 
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    console.log("🌐 Sending request to OpenRouter API...");
-    
-    // Make API request with proper error handling
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://albaker-portfolio.vercel.app",
-        "X-Title": "Albaker Portfolio"
-      },
-      body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...messages
-        ],
-        max_tokens: 500,
-        temperature: 0.7
-      })
-    });
-
-    console.log("📡 OpenRouter status:", response.status);
-    
-    // Handle response
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("❌ OpenRouter API error:", errorText);
+      const text = await request.text();
+      console.log("📥 Raw request text:", text.substring(0, 200) + "...");
+      body = JSON.parse(text);
+    } catch (parseError) {
+      console.error("❌ JSON parse error:", parseError);
       return new Response(
         JSON.stringify({ 
-          error: "OpenRouter API error", 
-          status: response.status,
-          details: errorText 
-        }), 
-        { status: response.status, headers: { 'Content-Type': 'application/json' } }
+          error: "Invalid JSON",
+          details: parseError.message 
+        }),
+        { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        }
       );
     }
 
-    const data = await response.json();
-    console.log("📦 OpenRouter response:", data);
+    const { messages } = body;
+    if (!messages || !Array.isArray(messages)) {
+      console.error("❌ Invalid messages format");
+      return new Response(
+        JSON.stringify({ error: "Missing or invalid messages array" }),
+        { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
 
-    const reply = data?.choices?.[0]?.message?.content || "No reply from model";
-    
-    return new Response(
-      JSON.stringify({ reply }), 
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    console.log("📨 Processing", messages.length, "messages");
+
+    // Check environment
+    if (!process.env.OPENROUTER_API_KEY) {
+      console.error("❌ OPENROUTER_API_KEY not found");
+      return new Response(
+        JSON.stringify({ error: "API key not configured" }),
+        { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
+
+    // Call OpenRouter with timeout
+    console.log("🌐 Calling OpenRouter API...");
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 25000); // 25s timeout for Vercel
+
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://albaker-portfolio.vercel.app",
+          "X-Title": "Albaker Portfolio"
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-3.5-turbo",
+          messages: [
+            { role: "system", content: systemPrompt },
+            ...messages
+          ],
+          max_tokens: 300,
+          temperature: 0.7
+        }),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+      
+      console.log("📡 OpenRouter response status:", response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("❌ OpenRouter error:", response.status, errorText);
+        return new Response(
+          JSON.stringify({ 
+            error: "API call failed",
+            status: response.status,
+            details: errorText.substring(0, 500)
+          }),
+          { 
+            status: 502,
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+      }
+
+      const data = await response.json();
+      const reply = data?.choices?.[0]?.message?.content;
+      
+      if (!reply) {
+        console.error("❌ No reply in response:", data);
+        return new Response(
+          JSON.stringify({ error: "No reply from AI model" }),
+          { 
+            status: 502,
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+      }
+
+      console.log("✅ Success! Reply length:", reply.length);
+      return new Response(
+        JSON.stringify({ reply }),
+        { 
+          status: 200,
+          headers: { 
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate'
+          }
+        }
+      );
+
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      if (fetchError.name === 'AbortError') {
+        console.error("❌ Request timeout");
+        return new Response(
+          JSON.stringify({ error: "Request timeout" }),
+          { 
+            status: 504,
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+      }
+      throw fetchError;
+    }
 
   } catch (error) {
-    console.error("❌ Unexpected server error:", error);
+    console.error("❌ Unexpected error:", error);
     return new Response(
       JSON.stringify({ 
-        error: "Unexpected server error", 
-        details: error.message 
-      }), 
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+        error: "Internal server error",
+        details: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      }),
+      { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
     );
   }
+}
+
+// Add a simple GET method for testing
+export async function GET() {
+  return new Response(
+    JSON.stringify({ 
+      message: "Chat API is running",
+      timestamp: new Date().toISOString(),
+      hasApiKey: !!process.env.OPENROUTER_API_KEY
+    }),
+    { 
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }
+  );
 }
