@@ -9,10 +9,10 @@ const projects = [
 
    {
     title: 'SOLFA web app',
-    description: 'Footprints web application is a part of the Student Enterprise Program at the African Leadership Academy (ALA). Footprints is an e-commerce platform designed to showcase and sell merchandise created by the student-led brand. The platform allows users to browse products, view details, and place orders seamlessly. The project aimed to give students real-world experience in managing a business while offering a functional, modern digital storefront. I focused on creating a clean user interface, smooth shopping experience, and scalable architecture to support the enterprise’s growth.',
+    description: 'SOLFA (Solve & Flourish Africa) is a community-driven organization dedicated to empowering marginalized communities through sustainable agricultural practices, environmental stewardship, and innovative agritech solutions. With my team, I built the official website for SOLFA using Next.js, delivering a fast, responsive, and modern user experience. The site showcases SOLFA’s mission, initiatives, and impact stories, while also serving as a hub for community engagement and partner outreach. The project focused on clean design, optimized performance, and scalability to support the organization’s growth.',
     image: '/images/web-app.jpg',
     github: null, // No GitHub available
-    live: 'https://footprints.alastudents.org/',
+    live: 'https://solfaafrica.org/',
     icon: <FaGlobe className="text-2xl text-green-500" />
   },
 
@@ -37,7 +37,7 @@ const projects = [
     title: 'HTA e-Learning Platform',
     description: 'Built an accessible platform for students with disabilities.',
     image: "/images/web-app.jpg", // No image available
-    github: 'https://github.com/albaker/hta-elearning',
+    github: null,
     live: null, // No live site
     icon: <FaGraduationCap className="text-2xl text-purple-500" />
   },
