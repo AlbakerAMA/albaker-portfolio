@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 
 const socialIcons = [
   {
-    href: 'https://github.com/albaker',
+    href: 'https://github.com/AlbakerAMA',
     icon: <FaGithub />,
     color: 'text-black dark:text-white',
   },
@@ -110,7 +110,7 @@ export default function HomePage() {
           transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
         >
           <a
-            href="https://github.com/albaker"
+            href="https://github.com/AlbakerAMA"
             target="_blank"
             rel="noopener noreferrer"
             className="absolute text-4xl text-black dark:text-white hover:scale-125 transition-transform pointer-events-auto"
