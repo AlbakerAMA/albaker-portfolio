@@ -13,7 +13,7 @@ export default function AboutPage() {
       title: "My Story",
       content: (
         <div className="space-y-4 flex flex-col items-center max-w-2xl mx-auto">
-          <div className="relative w-72 h-72 mb-4"> {/* Modified size here */}
+          <div className="relative w-72 h-72 mb-4"> 
             <Image
               src="/images/albaker-profile.jpg"
               alt="My Story"
@@ -22,15 +22,36 @@ export default function AboutPage() {
             />
           </div>
           {[
-            "I started my journey in tech at a young age, fascinated by how things work behind the scenes. My passion led me to explore various fields, from web development to machine learning. I believe in continuous learning and adapting to new challenges, which has shaped my career as a full stack developer and ML engineer."
+            " In Aswan, where I was born, the internet moved slower than the Nile on a still day. Sometimes, it didn’t move at all. For most people, that was just life. For me, it was a barrier to the world I desperately wanted to reach. School wasn’t much better. Classrooms were packed, the materials were outdated, and the education system focused on memorization rather than curiosity. Learning felt like climbing a mountain with no map. Instead of giving up, I started looking for ways to improve it for myself and others. I taught myself coding through unreliable connections, gathering knowledge from any resources I could find. I imagined classrooms where learning wasn’t restricted by location, time, or the teacher’s chalkboard. Joining the African Leadership Academy changed everything for me. Surrounded by innovators and dreamers, I began to explore how AI could transform education. I wanted to create tools that personalize learning, and adjust to each student’s needs. What started as frustration in a border city became my mission: to use technology to make education not just a privilege, but a right for anyone, anywhere."
           ].map((cert, index) => (
-            <motion.p 
+            <motion.p
               key={index}
               initial="hidden"
               animate="visible"
               variants={fadeIn}
               transition={{ delay: index * 0.1 }}
-              className="text-gray-600 dark:text-gray-300 text-center" // Added text-center
+              className="text-gray-600 dark:text-gray-300 text-center" 
+            >
+              {cert}
+            </motion.p>
+          ))}
+        </div>
+      )
+    },
+    {
+      title: "My Mission",
+      content: (
+        <div className="space-y-4 flex flex-col items-center max-w-2xl mx-auto">
+          {[
+            "What started as frustration in a border city became my mission: to use technology to make education not just a privilege, but a right for anyone, anywhere."
+          ].map((cert, index) => (
+            <motion.p
+              key={index}
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              transition={{ delay: index * 0.1 }}
+              className="text-gray-600 dark:text-gray-300 text-center"
             >
               {cert}
             </motion.p>
