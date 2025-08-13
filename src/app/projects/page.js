@@ -1,71 +1,89 @@
-'use client'
+
+"use client"
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FaGithub, FaExternalLinkAlt, FaCode, FaRobot, FaMobileAlt, FaGraduationCap, FaCogs, FaGlobe } from 'react-icons/fa'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { FaGithub, FaExternalLinkAlt, FaCode, FaGlobe, FaMobileAlt } from 'react-icons/fa'
 
 const projects = [
-
-   {
-    title: 'SOLFA web app',
-    description: 'SOLFA (Solve & Flourish Africa) is a community-driven organization dedicated to empowering marginalized communities through sustainable agricultural practices, environmental stewardship, and innovative agritech solutions. With my team, I built the official website for SOLFA using Next.js, delivering a fast, responsive, and modern user experience. The site showcases SOLFA’s mission, initiatives, and impact stories, while also serving as a hub for community engagement and partner outreach. The project focused on clean design, optimized performance, and scalability to support the organization’s growth.',
-    image: '/images/web-app.jpg',
-    github: null, // No GitHub available
+  {
+    title: 'SOLFA Web App',
+    slug: 'solfa-web-app',
+    description: 'Official website for SOLFA, empowering marginalized communities through sustainable agriculture.',
+    features: [
+      'Responsive Next.js frontend',
+      'Community engagement hub',
+      'Optimized for scalability',
+    ],
+    techStack: ['Next.js', 'Tailwind CSS', 'Vercel'],
+    image: '/images/web-app.jpg', 
+    github: null,
     live: 'https://solfaafrica.org/',
-    icon: <FaGlobe className="text-2xl text-green-500" />
+    icon: <FaGlobe className="text-2xl text-green-500" />,
+    category: 'Web',
   },
-
   {
     title: 'FixMate',
-    description: 'A Flutter Project Integrated with Firebase & AI Chatbot Support. I developed this mobile application using Flutter to support my brother in his work as a machine repair technician. The app allows him to efficiently manage and store customer data using Firebase for secure and real-time cloud storage. To further assist him on the job, I integrated a chatbot feature that helps identify machine issues by entering the machine code, the chatbot responds with detailed information about the machine, possible issues, and solutions. This project demonstrates my ability to build practical, user-focused applications that solve real-world problems through smart integration of technologies like Firebase and AI.',
-    image: '/images/mobile-app.jpg',
+    slug: 'fixmate',
+    description: 'A Flutter app with Firebase and AI chatbot for machine repair technicians.',
+    features: [
+      'Real-time customer data management',
+      'AI chatbot for machine diagnostics',
+      'Secure Firebase backend',
+    ],
+    techStack: ['Flutter', 'Firebase', 'AI Chatbot'],
+    image: '/images/mobile-app.jpg', 
     github: 'https://github.com/AlbakerAMA/FixMate.git',
     live: null,
-    icon: <FaMobileAlt className="text-2xl text-blue-500" />
+    icon: <FaMobileAlt className="text-2xl text-blue-500" />,
+    category: 'Mobile',
   },
   {
-    title: 'FootPrints web app',
-    description: 'Footprints web application is a part of the Student Enterprise Program at the African Leadership Academy (ALA). Footprints is an e-commerce platform designed to showcase and sell merchandise created by the student-led brand. The platform allows users to browse products, view details, and place orders seamlessly. The project aimed to give students real-world experience in managing a business while offering a functional, modern digital storefront. I focused on creating a clean user interface, smooth shopping experience, and scalable architecture to support the enterprise’s growth.',
-    image: '/images/web-app.jpg',
-    github: null, // No GitHub available
+    title: 'FootPrints Web App',
+    slug: 'footprints-web-app',
+    description: 'E-commerce platform for ALA’s student-led merchandise brand.',
+    features: [
+      'Seamless product browsing and ordering',
+      'Modern UI with smooth UX',
+      'Scalable architecture',
+    ],
+    techStack: ['Next.js', 'Tailwind CSS', 'Vercel'],
+    image: '/images/web-app.jpg', 
+    github: null,
     live: 'https://footprints.alastudents.org/',
-    icon: <FaGlobe className="text-2xl text-green-500" />
+    icon: <FaGlobe className="text-2xl text-green-500" />,
+    category: 'Web',
   },
- 
-  // {
-  //   title: 'HTA e-Learning Platform',
-  //   description: 'Built an accessible platform for students with disabilities.',
-  //   image: "/images/web-app.jpg", // No image available
-  //   github: null,
-  //   live: null, // No live site
-  //   icon: <FaGraduationCap className="text-2xl text-purple-500" />
-  // },
-    {
+  {
     title: 'FootPrints Mobile App',
-    description: 'I developed the Footprints mobile application to extend the reach of the African Leadership Academy’s student-led brand into the mobile space. The app allows customers to conveniently browse and purchase Footprints merchandise directly from their smartphones. It features a user-friendly interface, secure order handling, and a smooth checkout process, ensuring a consistent shopping experience across devices. By bringing the store to mobile, this project enhanced accessibility, boosted engagement, and supported the Student Enterprise’s mission of building entrepreneurial skills among students.',
-    image: '/images/mobile-app.jpg',
+    slug: 'footprints-mobile-app',
+    description: 'Mobile app for ALA’s FootPrints brand to shop merchandise on the go.',
+    features: [
+      'User-friendly mobile interface',
+      'Secure checkout process',
+      'Cross-device consistency',
+    ],
+    techStack: ['Flutter', 'Firebase'],
+    image: '/images/mobile-app.jpg', 
     github: 'https://github.com/AlbakerAMA/FootPrintsApp',
     live: null,
-    icon: <FaMobileAlt className="text-2xl text-blue-500" />
+    icon: <FaMobileAlt className="text-2xl text-blue-500" />,
+    category: 'Mobile',
   },
-
-  // {
-  //   title: 'Workflow Automation',
-  //   description: 'Automated alerts and system flows with Node-RED, n8n, WhatsApp + Sheets.',
-  //   image: '/images/ML.jpg', // No image available
-  //   github: null, // No GitHub available
-  //   live: null, // No live site
-  //   icon: <FaRobot className="text-2xl text-orange-500" />     // FaCogs
-  //}
-
 ]
 
 export default function ProjectsPage() {
+  const [filter, setFilter] = useState('All')
+
+  const categories = ['All', 'Web', 'Mobile', 'ML']
+  const filteredProjects = filter === 'All' ? projects : projects.filter(project => project.category === filter)
+
   return (
-    <section className="container mx-auto px-4 py-12">
+    <section className="container mx-auto px-4 py-12 min-w-[300px]">
       <motion.h1
-        className="text-4xl font-bold mb-12 text-center"
+        className="text-4xl font-bold mb-8 text-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -73,25 +91,51 @@ export default function ProjectsPage() {
         My <span className="text-blue-500">Projects</span>
       </motion.h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.map((project, index) => (
+      {/* Filter Bar */}
+      <motion.div
+        className="flex justify-center gap-4 mb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {categories.map(category => (
+          <button
+            key={category}
+            onClick={() => setFilter(category)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              filter === category
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
+            }`}
+            aria-pressed={filter === category}
+          >
+            {category}
+          </button>
+        ))}
+      </motion.div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredProjects.map((project, index) => (
           <motion.div
-            key={index}
-            className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-xl transition-shadow duration-300"
+            key={project.slug}
+            className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-2xl transition-all duration-300"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
             viewport={{ once: true }}
-            whileHover={{ y: -5 }}
+            whileHover={{ y: -10, scale: 1.02 }}
           >
             {/* Project Image or Placeholder */}
             <div className="h-48 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center">
               {project.image ? (
                 <Image
                   src={project.image}
-                  alt={project.title}
+                  alt={`Screenshot of ${project.title}`}
                   width={600}
                   height={300}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={80}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -110,15 +154,23 @@ export default function ProjectsPage() {
                 {project.icon}
                 <h2 className="text-xl font-bold text-gray-800 dark:text-white">{project.title}</h2>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">{project.description}</p>
-              
-              <div className="flex gap-3">
+              <p className="text-gray-700 dark:text-gray-200 mb-4 text-sm">{project.description}</p>
+              <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 text-sm mb-4">
+                {project.features.map((feature, i) => (
+                  <li key={i}>{feature}</li>
+                ))}
+              </ul>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                <strong>Tech Stack:</strong> {project.techStack.join(', ')}
+              </p>
+              <div className="flex gap-3 flex-wrap">
                 {project.github && (
                   <Link
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                    aria-label={`View ${project.title} source code on GitHub`}
                   >
                     <FaGithub /> GitHub
                   </Link>
@@ -129,14 +181,19 @@ export default function ProjectsPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition"
+                    aria-label={`View live demo of ${project.title}`}
                   >
                     <FaExternalLinkAlt /> Live Demo
                   </Link>
                 )}
                 {!project.github && !project.live && (
-                  <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                    <FaCode /> Code Private
-                  </span>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                    aria-label={`Learn more about ${project.title}`}
+                  >
+                    <FaCode /> Learn More
+                  </Link>
                 )}
               </div>
             </div>
@@ -146,3 +203,5 @@ export default function ProjectsPage() {
     </section>
   )
 }
+
+

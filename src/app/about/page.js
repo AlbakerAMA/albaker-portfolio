@@ -15,7 +15,7 @@ export default function AboutPage() {
         <div className="space-y-4 flex flex-col items-center max-w-2xl mx-auto">
           <div className="relative w-72 h-72 mb-4"> 
             <Image
-              src="/images/my-story.jpg"
+              src="/images/my story.jpg"
               alt="My Story"
               fill
               className="object-cover rounded-lg"
