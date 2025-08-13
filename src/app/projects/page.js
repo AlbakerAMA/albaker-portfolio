@@ -49,14 +49,16 @@ const projects = [
     live: null,
     icon: <FaMobileAlt className="text-2xl text-blue-500" />
   },
-  {
-    title: 'Workflow Automation',
-    description: 'Automated alerts and system flows with Node-RED, n8n, WhatsApp + Sheets.',
-    image: '/images/ML.jpg', // No image available
-    github: null, // No GitHub available
-    live: null, // No live site
-    icon: <FaRobot className="text-2xl text-orange-500" />     // FaCogs
-  }
+
+  // {
+  //   title: 'Workflow Automation',
+  //   description: 'Automated alerts and system flows with Node-RED, n8n, WhatsApp + Sheets.',
+  //   image: '/images/ML.jpg', // No image available
+  //   github: null, // No GitHub available
+  //   live: null, // No live site
+  //   icon: <FaRobot className="text-2xl text-orange-500" />     // FaCogs
+  //}
+
 ]
 
 export default function ProjectsPage() {

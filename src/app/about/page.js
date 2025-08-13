@@ -15,14 +15,14 @@ export default function AboutPage() {
         <div className="space-y-4 flex flex-col items-center max-w-2xl mx-auto">
           <div className="relative w-72 h-72 mb-4"> 
             <Image
-              src="/images/albaker-profile.jpg"
+              src="/images/my-story.jpg"
               alt="My Story"
               fill
               className="object-cover rounded-lg"
             />
           </div>
           {[
-            " In Aswan, where I was born, the internet moved slower than the Nile on a still day. Sometimes, it didn’t move at all. For most people, that was just life. For me, it was a barrier to the world I desperately wanted to reach. School wasn’t much better. Classrooms were packed, the materials were outdated, and the education system focused on memorization rather than curiosity. Learning felt like climbing a mountain with no map. Instead of giving up, I started looking for ways to improve it for myself and others. I taught myself coding through unreliable connections, gathering knowledge from any resources I could find. I imagined classrooms where learning wasn’t restricted by location, time, or the teacher’s chalkboard. Joining the African Leadership Academy changed everything for me. Surrounded by innovators and dreamers, I began to explore how AI could transform education. I wanted to create tools that personalize learning, and adjust to each student’s needs. I envisioned a future where every student, no matter where they lived, could access quality education tailored to their unique learning style. I started building projects that used AI to adapt lessons to individual students, making learning more engaging and effective. My journey has been about turning frustration into innovation, and I’m committed to making education accessible for everyone."
+            "In Aswan, where I was born, the internet moved slower than the Nile on a still day. Sometimes, it didn’t move at all. For most people, that was just life. For me, it was a barrier to the world I desperately wanted to reach. School wasn’t much better. Classrooms were packed, the materials were outdated, and the education system focused on memorization rather than curiosity. Learning felt like climbing a mountain with no map. Instead of giving up, I started looking for ways to improve it for myself and others. I taught myself coding through unreliable connections, gathering knowledge from any resources I could find. I imagined classrooms where learning wasn’t restricted by location, time, or the teacher’s chalkboard. Joining the African Leadership Academy changed everything for me. Surrounded by innovators and dreamers, I began to explore how AI could transform education. I wanted to create tools that personalize learning, and adjust to each student’s needs. I envisioned a future where every student, no matter where they lived, could access quality education tailored to their unique learning style. I started building projects that used AI to adapt lessons to individual students, making learning more engaging and effective. My journey has been about turning frustration into innovation, and I’m committed to making education accessible for everyone."
           ].map((cert, index) => (
             <motion.p
               key={index}

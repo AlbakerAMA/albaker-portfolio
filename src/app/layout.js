@@ -16,9 +16,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.className} bg-gradient-to-br from-white via-gray-50 to-gray-200 text-gray-900 dark:from-black dark:via-gray-900 dark:to-gray-950 dark:text-white transition-colors duration-500`}>
         <Navbar />
-        <main className="min-h-screen container mx-auto px-4 py-10">{children}</main>
+        <main className="min-h-screen container mx-auto px-4 py-10 min-w-[300px]">{children}</main>
         <ChatAssistant />
-        
         <Footer />
       </body>
     </html>

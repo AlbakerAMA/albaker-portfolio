@@ -82,7 +82,7 @@ export default function ChatAssistant() {
       {!isOpen && (
         <motion.button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-8 right-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-full shadow-xl z-50 flex items-center gap-2"
+          className="fixed bottom-8 right-4 sm:right-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-full shadow-xl z-50 flex items-center gap-2"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0 }}
@@ -102,8 +102,7 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ type: 'spring', damping: 25 }}
-            className="fixed bottom-8 right-8 w-96 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 flex flex-col"
-            style={{ height: '70vh', maxHeight: '600px' }}
+            className="fixed bottom-0 left-0 w-full h-full sm:bottom-8 sm:right-8 sm:left-auto sm:w-96 sm:h-[70vh] sm:max-h-[600px] bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl sm:shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 flex flex-col"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 text-white">

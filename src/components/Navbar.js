@@ -83,34 +83,34 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-          <div className="container mx-auto px-4 py-3 flex flex-col space-y-3">
+          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             <Link 
               href="/about" 
               onClick={() => setOpen(false)}
-              className="py-2 hover:text-blue-500 transition-colors"
+              className="py-2 text-base hover:text-blue-500 transition-colors"
             >
               About
             </Link>
             <Link 
               href="/projects" 
               onClick={() => setOpen(false)}
-              className="py-2 hover:text-blue-500 transition-colors"
+              className="py-2 text-base hover:text-blue-500 transition-colors"
             >
               Projects
             </Link>
             <Link 
               href="/contact" 
               onClick={() => setOpen(false)}
-              className="py-2 hover:text-blue-500 transition-colors"
+              className="py-2 text-base hover:text-blue-500 transition-colors"
             >
               Contact
             </Link>
-            <div className="flex items-center space-x-4 pt-2">
+            <div className="flex items-center space-x-6 pt-3">
               <a href="https://github.com/AlbakerAMA" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">
-                <FaGithub className="w-5 h-5" />
+                <FaGithub className="w-6 h-6" />
               </a>
               <a href="https://linkedin.com/in/albaker" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-blue-500 transition-colors">
-                <FaLinkedin className="w-5 h-5" />
+                <FaLinkedin className="w-6 h-6" />
               </a>
             </div>
           </div>
