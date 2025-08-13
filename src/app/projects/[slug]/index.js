@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { projects } from '../index'
+import Image from 'next/image'
 
 export default function ProjectDetail() {
   const router = useRouter()
