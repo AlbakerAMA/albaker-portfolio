@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { FaGithub, FaExternalLinkAlt, FaCode, FaGlobe, FaMobileAlt } from 'react-icons/fa'
+import { FaComments, FaGithub, FaExternalLinkAlt, FaCode, FaGlobe, FaMobileAlt, FaHeartbeat, FaGraduationCap } from 'react-icons/fa'
 
 const projects = [
   {
@@ -41,6 +41,56 @@ const projects = [
     category: 'Mobile',
   },
   {
+    title: 'Personal Chat Bot',
+    slug: 'personal-chat-bot',
+    description: 'An AI assistant that lets users chat directly with their Google Docs using GPT models via a seamless Next.js integration.',
+    features: [
+      'Google Docs integration via service account authentication',
+      'Context-aware chat responses using document content',
+      'Secure API routes for chat and diagnostics',
+    ],
+    techStack: ['Next.js', 'TypeScript', 'Google Drive API', 'OpenRouter'],
+    image: '/images/ML.jpg',
+    github: 'https://github.com/AlbakerAMA/PersonalChatBot',
+    live: null, 
+    icon: <FaComments className="text-2xl text-purple-500" />,
+    category: 'ML',
+  },
+
+  {
+    title: 'AlbakerAMA Portfolio',
+    slug: 'albakerama-portfolio',
+    description: 'A modern personal portfolio with an AI-powered RAG chatbot assistant, built using Next.js 15, React 19, and advanced AI integrations.',
+    features: [
+      'RAG-powered chatbot with Pinecone + Hugging Face embeddings',
+      'OpenRouter integration for AI completions',
+      'Responsive and animated portfolio design',
+    ],
+    techStack: ['Next.js 15', 'React 19', 'Tailwind CSS', 'Pinecone', 'Hugging Face', 'OpenRouter'],
+    image: '/images/web-app.jpg',
+    github: 'https://github.com/AlbakerAMA/albaker-portfolio',
+    live: 'https://albaker-portfolio.vercel.app/', 
+    icon: <FaGlobe className="text-2xl text-green-500" />,
+    category: 'Web',
+  },
+  {
+    title: 'Education Platform',
+    slug: 'education-platform',
+    description: 'A full-stack learning management system where instructors can create courses and quizzes, and students can enroll, learn, and take tests.',
+    features: [
+      'Student dashboard with course enrollment, lessons, and tests',
+      'Admin dashboard for adding courses, lessons, and quizzes',
+      'Real-time course and student statistics',
+    ],
+    techStack: ['PHP', 'JavaScript', 'Firebase', 'MySQL', 'HTML/CSS'],
+    image: '/images/web-app.jpg',
+    github: null, 
+    live: null, 
+    icon: <FaGraduationCap className="text-2xl text-indigo-500" />,
+    category: 'Web',
+  },
+
+  {
     title: 'FootPrints Web App',
     slug: 'footprints-web-app',
     description: 'E-commerce platform for ALA’s student-led merchandise brand.',
@@ -56,6 +106,23 @@ const projects = [
     icon: <FaGlobe className="text-2xl text-green-500" />,
     category: 'Web',
   },
+  {
+    title: 'Body Analysis',
+    slug: 'body-analysis',
+    description: 'A comprehensive body analysis tool that assesses body type, shape, health metrics, and provides personalized recommendations using advanced AI integrations.',
+    features: [
+      'Body fat analysis via Nyckel API',
+      'Enhanced visual & data-driven insights via MoonshotAI',
+      'Intuitive flow: input user data + photo → get detailed body insights',
+    ],
+    techStack: ['Next.js', 'TypeScript', 'Nyckel API', 'MoonshotAI', 'Tailwind CSS'],
+    image: '/images/ML.jpg',
+    github: 'https://github.com/AlbakerAMA/Body-Analysis',
+    live: 'https://body-analysis.vercel.app', // replace if different
+    icon: <FaHeartbeat className="text-2xl text-red-500" />,
+    category: 'ML',
+  },
+
   {
     title: 'FootPrints Mobile App',
     slug: 'footprints-mobile-app',

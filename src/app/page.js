@@ -111,7 +111,7 @@ export default function HomePage() {
             <Link href="/Albaker_Ahmed_CV.pdf" target="_blank" className="px-6 py-3 border border-black dark:border-white rounded-xl font-semibold hover:scale-105 transition-transform">Download CV</Link>
           </motion.div>
         </div>
-        <div className="flex-1 relative w-[250px] h-[350px] sm:w-[300px] sm:h-[450px] md:w-[400px] md:h-[550px] mx-auto">
+        <div className="flex-1 relative w-[150px] h-[150px] sm:w-[180px] sm:h-[180px] md:w-[220px] md:h-[400px] mx-auto">
           <motion.div
             className="relative w-full h-full pointer-events-none"
             initial={{ scale: 0.8, opacity: 0 }}

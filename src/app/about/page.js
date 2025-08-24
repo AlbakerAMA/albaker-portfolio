@@ -43,7 +43,7 @@ export default function AboutPage() {
       content: (
         <div className="space-y-4 flex flex-col items-center max-w-2xl mx-auto">
           {[
-            "What started as frustration in a border city became my mission: to use technology to make education not just a privilege, but a right for anyone, anywhere."
+            "My mission is to use technology to make education not just a privilege, but a right for anyone, anywhere."
           ].map((cert, index) => (
             <motion.p
               key={index}
