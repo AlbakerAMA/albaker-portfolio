@@ -55,15 +55,45 @@ export default function ChatAssistant() {
         body: JSON.stringify({ messages: newMessages })
       })
 
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`)
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('API Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData
+        });
+        
+        let errorMessage = "⚠️ Sorry, I'm having trouble responding. Please try again later.";
+        
+        if (response.status === 500 && errorData.message) {
+          errorMessage = `⚠️ Configuration issue: ${errorData.message}`;
+        } else if (response.status === 504) {
+          errorMessage = "⚠️ Request timeout. Please try a shorter question.";
+        } else if (response.status === 400 && errorData.message) {
+          errorMessage = `⚠️ ${errorData.message}`;
+        }
+        
+        throw new Error(errorMessage);
+      }
 
       const data = await response.json()
+      
+      if (!data.reply) {
+        throw new Error("No response received from AI");
+      }
+      
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }])
     } catch (error) {
       console.error('Chat Error:', error)
+      
+      let errorMessage = error.message;
+      if (!errorMessage.startsWith('⚠️')) {
+        errorMessage = "⚠️ Sorry, I'm having trouble responding. Please try again later.";
+      }
+      
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: "⚠️ Sorry, I'm having trouble responding. Please try again later."
+        content: errorMessage
       }])
     } finally {
       setIsLoading(false)

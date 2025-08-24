@@ -1,5 +1,6 @@
 // RAG-enabled chatbot with Pinecone + Hugging Face + OpenRouter
 export const runtime = 'nodejs';
+export const maxDuration = 10; // Vercel timeout limit
 
 // Import required dependencies
 import { Pinecone } from '@pinecone-database/pinecone';
@@ -308,6 +309,18 @@ async function generateAnswer(userQuery) {
   }
 }
 
+export async function OPTIONS(request) {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400'
+    }
+  });
+}
+
 export async function POST(request) {
   console.log("🚀 RAG-enabled POST route handler called");
   console.log("Environment check - Keys exist:", {
@@ -328,11 +341,15 @@ export async function POST(request) {
       return new Response(
         JSON.stringify({ 
           error: "Invalid JSON",
+          message: "Request body must be valid JSON",
           details: parseError.message 
         }),
         { 
           status: 400,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
         }
       );
     }
@@ -341,10 +358,16 @@ export async function POST(request) {
     if (!messages || !Array.isArray(messages)) {
       console.error("❌ Invalid messages format");
       return new Response(
-        JSON.stringify({ error: "Missing or invalid messages array" }),
+        JSON.stringify({ 
+          error: "Missing or invalid messages array",
+          message: "Request must include a 'messages' array"
+        }),
         { 
           status: 400,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
         }
       );
     }
@@ -355,10 +378,16 @@ export async function POST(request) {
     const userQuery = messages[messages.length - 1]?.content;
     if (!userQuery) {
       return new Response(
-        JSON.stringify({ error: "No user query found" }),
+        JSON.stringify({ 
+          error: "No user query found",
+          message: "The last message must have content"
+        }),
         { 
           status: 400,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
         }
       );
     }
@@ -367,10 +396,17 @@ export async function POST(request) {
     if (!process.env.OPENROUTER_API_KEY) {
       console.error("❌ OpenRouter API key not configured");
       return new Response(
-        JSON.stringify({ error: "AI service not configured" }),
+        JSON.stringify({ 
+          error: "AI service not configured",
+          message: "Please configure OPENROUTER_API_KEY in Vercel environment variables",
+          docs: "https://vercel.com/docs/projects/environment-variables"
+        }),
         { 
           status: 500,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
         }
       );
     }
@@ -378,10 +414,17 @@ export async function POST(request) {
     if (!process.env.HUGGINGFACE_API_KEY) {
       console.error("❌ Hugging Face API key not configured");
       return new Response(
-        JSON.stringify({ error: "Embedding service not configured" }),
+        JSON.stringify({ 
+          error: "Embedding service not configured",
+          message: "Please configure HUGGINGFACE_API_KEY in Vercel environment variables",
+          docs: "https://vercel.com/docs/projects/environment-variables"
+        }),
         { 
           status: 500,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
         }
       );
     }
@@ -389,10 +432,17 @@ export async function POST(request) {
     if (!process.env.PINECONE_API_KEY) {
       console.error("❌ Pinecone API key not configured");
       return new Response(
-        JSON.stringify({ error: "Vector database not configured" }),
+        JSON.stringify({ 
+          error: "Vector database not configured",
+          message: "Please configure PINECONE_API_KEY in Vercel environment variables",
+          docs: "https://vercel.com/docs/projects/environment-variables"
+        }),
         { 
           status: 500,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
         }
       );
     }
@@ -400,7 +450,7 @@ export async function POST(request) {
     // Generate answer using RAG pipeline
     console.log("🔍 Starting RAG pipeline...");
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout for Vercel
 
     try {
       const reply = await generateAnswer(userQuery);
@@ -409,10 +459,16 @@ export async function POST(request) {
       if (!reply) {
         console.error("❌ No reply generated");
         return new Response(
-          JSON.stringify({ error: "No reply from AI model" }),
+          JSON.stringify({ 
+            error: "No reply from AI model",
+            message: "The AI service didn't return a response. Please try again."
+          }),
           { 
             status: 502,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            }
           }
         );
       }
@@ -424,7 +480,10 @@ export async function POST(request) {
           status: 200,
           headers: { 
             'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache, no-store, must-revalidate'
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
           }
         }
       );
@@ -432,12 +491,20 @@ export async function POST(request) {
     } catch (fetchError) {
       clearTimeout(timeoutId);
       if (fetchError.name === 'AbortError') {
-        console.error("❌ Request timeout");
+        console.error("❌ Request timeout (8s limit for Vercel)");
         return new Response(
-          JSON.stringify({ error: "Request timeout" }),
+          JSON.stringify({ 
+            error: "Request timeout",
+            message: "The request took too long to process. Please try a shorter question."
+          }),
           { 
             status: 504,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'POST, OPTIONS',
+              'Access-Control-Allow-Headers': 'Content-Type'
+            }
           }
         );
       }
@@ -446,15 +513,30 @@ export async function POST(request) {
 
   } catch (error) {
     console.error("❌ Unexpected error:", error);
+    console.error("Error stack:", error.stack);
+    console.error("Environment check:", {
+      hasOpenRouter: !!process.env.OPENROUTER_API_KEY,
+      hasHuggingFace: !!process.env.HUGGINGFACE_API_KEY,
+      hasPinecone: !!process.env.PINECONE_API_KEY,
+      nodeEnv: process.env.NODE_ENV,
+      vercelUrl: process.env.VERCEL_URL
+    });
+    
     return new Response(
       JSON.stringify({ 
         error: "Internal server error",
-        details: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        message: "Something went wrong. Please try again.",
+        details: process.env.NODE_ENV === 'development' ? error.message : "Server error",
+        timestamp: new Date().toISOString()
       }),
       { 
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type'
+        }
       }
     );
   }
