@@ -74,7 +74,7 @@ const projects = [
     category: 'Web',
   },
   {
-    title: 'Education Platform',
+    title: 'AltaRek',
     slug: 'education-platform',
     description: 'A full-stack learning management system where instructors can create courses and quizzes, and students can enroll, learn, and take tests.',
     features: [
@@ -85,7 +85,7 @@ const projects = [
     techStack: ['PHP', 'JavaScript', 'Firebase', 'MySQL', 'HTML/CSS'],
     image: '/images/web-app.jpg',
     github: null, 
-    live: null, 
+    live: "https://altarek.xyz", 
     icon: <FaGraduationCap className="text-2xl text-indigo-500" />,
     category: 'Web',
   },
