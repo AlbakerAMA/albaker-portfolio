@@ -3,57 +3,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
+import { socialIcons, skillsData } from '@/lib/data'
 
-const socialIcons = [
-  {
-    href: 'https://github.com/AlbakerAMA',
-    icon: <FaGithub />,
-    color: 'text-black dark:text-white',
-  },
-  {
-    href: 'https://linkedin.com/in/albaker',
-    icon: <FaLinkedin />,
-    color: 'text-blue-600 dark:text-blue-400',
-  },
-  {
-    href: 'https://instagram.com/albaker.me',
-    icon: <FaInstagram />,
-    color: 'text-pink-500',
-  },
-  {
-    href: 'https://facebook.com/albaker114',
-    icon: <FaFacebook />,
-    color: 'text-blue-700',
-  },
-]
-
-const skillsData = {
-  "Languages": [
-    { name: "HTML" },
-    { name: "JavaScript" },
-    { name: "Python" },
-    { name: "MySQL" },
-  ],
-  "Frameworks & Libraries": [
-    { name: "Next.js" },
-    { name: "React" },
-    { name: "Flutter" },
-    { name: "Firebase" },
-  ],
-  "ML & Data Science": [
-    { name: "Pandas" },
-    { name: "Scikit-learn" },
-    { name: "NumPy" },
-    { name: "TensorFlow" },
-    { name: "Matplotlib" },
-    { name: "Jupyter" },
-  ]
+interface Position {
+  top: string;
+  left: string;
+  right: string;
 }
 
 // Generate random positions near the photo
-function getRandomPositions(count) {
+function getRandomPositions(count: number): Position[] {
   return Array.from({ length: count }, () => ({
     top: `${30 + Math.random() * 40}%`,
     left: `${20 + Math.random() * 60}%`,
@@ -64,26 +24,32 @@ function getRandomPositions(count) {
 export default function HomePage() {
   const [typedText, setTypedText] = useState('')
   const fullText = "Hi, I'm Albaker Ahmed"
-  const [iconPositions, setIconPositions] = useState(getRandomPositions(socialIcons.length))
+  const [iconPositions] = useState<Position[]>(getRandomPositions(socialIcons.length))
 
   useEffect(() => {
-    let i = 0
     const typingInterval = setInterval(() => {
-      if (i < fullText.length) {
-        setTypedText(fullText.substring(0, i + 1))
-        i++
-      } else {
-        clearInterval(typingInterval)
-      }
-    }, 300) 
-    
+      setTypedText((prev) => {
+        if (prev.length < fullText.length) {
+          return fullText.substring(0, prev.length + 1)
+        } else {
+          clearInterval(typingInterval)
+          return prev
+        }
+      })
+    }, 150)
+
     return () => clearInterval(typingInterval)
-  }, [])
+  }, [fullText])
 
   return (
     <div>
-      <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 animate-fade-in min-h-[80vh]">
-        <div className="flex-1">
+      <section className="relative flex flex-col-reverse md:flex-row items-center justify-between gap-8 animate-fade-in min-h-[80vh] overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-5">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+        </div>
+        <div className="flex-1 z-10">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -211,7 +177,7 @@ export default function HomePage() {
                         <motion.div
                           className="h-full bg-gradient-to-r from-black to-gray-600 dark:from-white dark:to-gray-400 rounded-full origin-left"
                           initial={{ scaleX: 0 }}
-                          whileInView={{ scaleX: Math.random() * 0.3 + 0.7 }}
+                          whileInView={{ scaleX: 0.8 }}
                           transition={{ duration: 1.5, delay: index * 0.1 + 0.8 }}
                         />
                       </motion.div>

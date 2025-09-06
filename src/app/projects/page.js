@@ -139,6 +139,22 @@ const projects = [
     icon: <FaMobileAlt className="text-2xl text-blue-500" />,
     category: 'Mobile',
   },
+  {
+    title: 'AI Image Generator',
+    slug: 'ai-image-generator',
+    description: 'A web app that generates images from text prompts using AI.',
+    features: [
+      'Text-to-image generation',
+      'User-friendly interface',
+      'Scalable and performant',
+    ],
+    techStack: ['Next.js', 'TypeScript', 'DALL-E 2', 'Tailwind CSS'],
+    image: '/images/ML.jpg',
+    github: 'https://github.com/AlbakerAMA/ai-image-generator',
+    live: null,
+    icon: <FaCode className="text-2xl text-purple-500" />,
+    category: 'ML',
+  },
 ]
 
 export default function ProjectsPage() {

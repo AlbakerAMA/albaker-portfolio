@@ -6,14 +6,18 @@ import { Menu, X, Sun, Moon } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState<boolean>(false)
+  const [darkMode, setDarkMode] = useState<boolean>(false)
+  const [scrolled, setScrolled] = useState<boolean>(false)
 
   useEffect(() => {
     const stored = localStorage.getItem('theme')
-    if (stored === 'dark') document.documentElement.classList.add('dark')
-    setDarkMode(stored === 'dark')
+    if (stored === 'dark') {
+      document.documentElement.classList.add('dark')
+      setDarkMode(true)
+    } else {
+      setDarkMode(false)
+    }
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
