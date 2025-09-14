@@ -56,6 +56,25 @@ const projects = [
     icon: <FaComments className="text-2xl text-purple-500" />,
     category: 'ML',
   },
+    {
+    title: 'Solfa Academy',
+    slug: 'solfa-academy',
+    description: 'A modern educational platform with role-based dashboards for students, instructors, and administrators.',
+    features: [
+      'User authentication and role-based access control',
+      'Course management and enrollment system',
+      'Quiz and assignment functionality',
+      'Admin panel for user and content management',
+      'Responsive UI with Tailwind CSS',
+    ],
+    techStack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'React Context API'],
+    image: '/images/solfa-academy.jpg', 
+    github: null, 
+    live: "https://academy.solfaafrica.org/",   
+    icon: <FaGraduationCap className="text-2xl text-indigo-500" />,
+    category: 'Web',
+  },
+
 
   {
     title: 'AlbakerAMA Portfolio',
