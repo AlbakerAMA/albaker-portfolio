@@ -120,7 +120,7 @@ export default function ChatAssistant() {
           exit={{ opacity: 0 }}
         >
           <FiMessageCircle size={20} />
-          <span className="font-medium">Ask AI</span>
+          <span className="font-medium">Baker AI</span>
         </motion.button>
       )}
 

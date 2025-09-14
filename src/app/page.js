@@ -4,6 +4,22 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa'
+import { 
+  SiHtml5, 
+  SiJavascript, 
+  SiPython, 
+  SiMysql,
+  SiNextdotjs,
+  SiReact,
+  SiFlutter,
+  SiFirebase,
+  SiPandas,
+  SiScikitlearn,
+  SiNumpy,
+  SiTensorflow,
+  SiJupyter,
+  SiSupabase
+} from 'react-icons/si'
 import { useEffect, useState } from 'react'
 
 const socialIcons = [
@@ -31,24 +47,29 @@ const socialIcons = [
 
 const skillsData = {
   "Languages": [
-    { name: "HTML" },
-    { name: "JavaScript" },
-    { name: "Python" },
-    { name: "MySQL" },
+    { name: "HTML", icon: <SiHtml5 /> },
+    { name: "JavaScript", icon: <SiJavascript /> },
+    { name: "Python", icon: <SiPython /> },
+    { name: "MySQL", icon: <SiMysql /> },
   ],
   "Frameworks & Libraries": [
-    { name: "Next.js" },
-    { name: "React" },
-    { name: "Flutter" },
-    { name: "Firebase" },
+    { name: "Next.js", icon: <SiNextdotjs /> },
+    { name: "React", icon: <SiReact /> },
+    { name: "Flutter", icon: <SiFlutter /> },
+    { name: "Firebase", icon: <SiFirebase /> },
+    { name: "Supabase", icon: <SiSupabase /> },
+    { 
+      name: "VectorDB", 
+      icon: <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xs">V</div> 
+    },
   ],
   "ML & Data Science": [
-    { name: "Pandas" },
-    { name: "Scikit-learn" },
-    { name: "NumPy" },
-    { name: "TensorFlow" },
-    { name: "Matplotlib" },
-    { name: "Jupyter" },
+    { name: "Pandas", icon: <SiPandas /> },
+    { name: "Scikit-learn", icon: <SiScikitlearn /> },
+    { name: "NumPy", icon: <SiNumpy /> },
+    { name: "TensorFlow", icon: <SiTensorflow /> },
+    { name: "Matplotlib", icon: <SiPython /> }, // Using Python icon as fallback
+    { name: "Jupyter", icon: <SiJupyter /> },
   ]
 }
 
@@ -99,7 +120,7 @@ export default function HomePage() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-lg md:text-xl mb-6 max-w-xl"
           >
-            Full Stack Developer | ML Engineer | Flutter & Next.js Specialist. Passionate about tech that solves real-world problems.
+            Full Stack Developer | ML Engineer. Passionate about tech that solves real-world problems.
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -195,9 +216,9 @@ export default function HomePage() {
                     </div>
                     <div className="relative z-10">
                       <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <span className="text-xl font-bold text-black dark:text-white">
-                          {skill.name.charAt(0)}
-                        </span>
+                        <div className="text-2xl text-black dark:text-white">
+                          {skill.icon}
+                        </div>
                       </div>
                       <h4 className="text-center font-semibold text-black dark:text-white text-sm md:text-base group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
                         {skill.name}
