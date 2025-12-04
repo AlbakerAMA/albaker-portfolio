@@ -18,7 +18,7 @@ const projects = [
       'Optimized for scalability',
     ],
     techStack: ['Next.js', 'Tailwind CSS', 'Vercel'],
-    image: '/images/solfa.jpg', 
+    image: '/images/solfa.jpg',
     github: null,
     live: 'https://solfaafrica.org/',
     icon: <FaGlobe className="text-2xl text-green-500" />,
@@ -34,12 +34,32 @@ const projects = [
       'Secure Firebase backend',
     ],
     techStack: ['Flutter', 'Firebase', 'AI Chatbot'],
-    image: '/images/mobile-app.jpg', 
+    image: '/images/mobile-app.jpg',
     github: 'https://github.com/AlbakerAMA/FixMate.git',
     live: null,
     icon: <FaMobileAlt className="text-2xl text-blue-500" />,
     category: 'Mobile',
   },
+  {
+    title: 'SOLFA Vault',
+    slug: 'solfa-vault',
+    description: 'A secure and scalable web-based file management system for SOLFA, featuring authentication, file sharing, comments, and admin controls.',
+    features: [
+      'User registration and authentication',
+      'File upload, download, and metadata management',
+      'Granular file sharing (specific users or public)',
+      'Comment system for collaborative communication',
+      'Admin dashboard for user role and status management',
+      'Responsive interface with Tailwind CSS',
+    ],
+    techStack: ['PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'AWS S3'],
+    image: '/images/vault.jpg',
+    github: null,
+    live: "https://vault.solfaafrica.org/login",
+    icon: <FaLock className="text-2xl text-red-500" />,
+    category: 'Web',
+  },
+
   {
     title: 'Personal Chat Bot',
     slug: 'personal-chat-bot',
@@ -52,11 +72,11 @@ const projects = [
     techStack: ['Next.js', 'TypeScript', 'Google Drive API', 'OpenRouter'],
     image: '/images/ML.jpg',
     github: 'https://github.com/AlbakerAMA/PersonalChatBot',
-    live: null, 
+    live: null,
     icon: <FaComments className="text-2xl text-purple-500" />,
     category: 'ML',
   },
-    {
+  {
     title: 'Solfa Academy',
     slug: 'solfa-academy',
     description: 'A modern educational platform with role-based dashboards for students, instructors, and administrators.',
@@ -68,9 +88,9 @@ const projects = [
       'Responsive UI with Tailwind CSS',
     ],
     techStack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'React Context API'],
-    image: '/images/solfa-academy.jpg', 
-    github: null, 
-    live: "https://academy.solfaafrica.org/",   
+    image: '/images/solfa-academy.jpg',
+    github: null,
+    live: "https://academy.solfaafrica.org/",
     icon: <FaGraduationCap className="text-2xl text-indigo-500" />,
     category: 'Web',
   },
@@ -88,7 +108,7 @@ const projects = [
     techStack: ['Next.js 15', 'React 19', 'Tailwind CSS', 'Pinecone', 'Hugging Face', 'OpenRouter'],
     image: '/images/port.jpg',
     github: 'https://github.com/AlbakerAMA/albaker-portfolio',
-    live: 'https://albaker-portfolio.vercel.app/', 
+    live: 'https://albaker-portfolio.vercel.app/',
     icon: <FaGlobe className="text-2xl text-green-500" />,
     category: 'Web',
   },
@@ -103,8 +123,8 @@ const projects = [
     ],
     techStack: ['PHP', 'JavaScript', 'Firebase', 'MySQL', 'HTML/CSS'],
     image: '/images/altarek.jpg',
-    github: null, 
-    live: "https://altarek.xyz", 
+    github: null,
+    live: "https://altarek.xyz",
     icon: <FaGraduationCap className="text-2xl text-indigo-500" />,
     category: 'Web',
   },
@@ -119,7 +139,7 @@ const projects = [
       'Scalable architecture',
     ],
     techStack: ['Next.js', 'Tailwind CSS', 'Vercel'],
-    image: '/images/footprints.jpg', 
+    image: '/images/footprints.jpg',
     github: null,
     live: 'https://footprints.alastudents.org/',
     icon: <FaGlobe className="text-2xl text-green-500" />,
@@ -152,7 +172,7 @@ const projects = [
       'Cross-device consistency',
     ],
     techStack: ['Flutter', 'Firebase'],
-    image: '/images/mobile-app.jpg', 
+    image: '/images/mobile-app.jpg',
     github: 'https://github.com/AlbakerAMA/FootPrintsApp',
     live: null,
     icon: <FaMobileAlt className="text-2xl text-blue-500" />,
@@ -188,11 +208,10 @@ export default function ProjectsPage() {
           <button
             key={category}
             onClick={() => setFilter(category)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              filter === category
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === category
+              ? 'bg-blue-500 text-white'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
+              }`}
             aria-pressed={filter === category}
           >
             {category}
