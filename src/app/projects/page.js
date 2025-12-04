@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { FaComments, FaGithub, FaExternalLinkAlt, FaCode, FaGlobe, FaMobileAlt, FaHeartbeat, FaGraduationCap } from 'react-icons/fa'
+import { FaComments, FaGithub, FaLock, FaExternalLinkAlt, FaCode, FaGlobe, FaMobileAlt, FaHeartbeat, FaGraduationCap } from 'react-icons/fa'
 
 const projects = [
   {
