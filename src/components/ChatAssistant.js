@@ -5,7 +5,7 @@ import { FiSend, FiX, FiMessageCircle, FiCode, FiBriefcase, FiMail } from 'react
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function ChatAssistant() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -62,9 +62,9 @@ export default function ChatAssistant() {
           statusText: response.statusText,
           error: errorData
         });
-        
+
         let errorMessage = "⚠️ Sorry, I'm having trouble responding. Please try again later.";
-        
+
         if (response.status === 500 && errorData.message) {
           errorMessage = `⚠️ Configuration issue: ${errorData.message}`;
         } else if (response.status === 504) {
@@ -72,25 +72,25 @@ export default function ChatAssistant() {
         } else if (response.status === 400 && errorData.message) {
           errorMessage = `⚠️ ${errorData.message}`;
         }
-        
+
         throw new Error(errorMessage);
       }
 
       const data = await response.json()
-      
+
       if (!data.reply) {
         throw new Error("No response received from AI");
       }
-      
+
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }])
     } catch (error) {
       console.error('Chat Error:', error)
-      
+
       let errorMessage = error.message;
       if (!errorMessage.startsWith('⚠️')) {
         errorMessage = "⚠️ Sorry, I'm having trouble responding. Please try again later.";
       }
-      
+
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: errorMessage
@@ -162,17 +162,16 @@ export default function ChatAssistant() {
                   className={`flex ${msg.role === 'assistant' ? 'justify-start' : 'justify-end'}`}
                 >
                   <div
-                    className={`max-w-[80%] px-4 py-3 rounded-2xl ${
-                      msg.role === 'assistant'
+                    className={`max-w-[80%] px-4 py-3 rounded-2xl ${msg.role === 'assistant'
                         ? 'bg-blue-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
                         : 'bg-blue-500 text-white'
-                    }`}
+                      }`}
                   >
                     {msg.content}
                   </div>
                 </motion.div>
               ))}
-              
+
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="bg-blue-50 dark:bg-gray-800 px-4 py-3 rounded-2xl">
