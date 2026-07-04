@@ -262,9 +262,13 @@ Mission: Use technology to make education a right, not a privilege.
 Expertise: Next.js, React, Flutter, Python, TensorFlow, ML systems, e-learning platforms.
 
 Key Projects:
-1. SOLFA web app - ML-powered educational platform
-2. FootPrints - AI-powered Flutter shopping app  
-3. FixMate - AI assistant for machine repair technicians
+1. AgencyOS - A premium internal task, project, and client management panel for high-performing marketing agencies (Next.js, React, Tailwind CSS).
+2. Lajiktech - A youth-centered tech company bridging the digital skills gap and delivering software solutions across Africa (React, Vite, Tailwind CSS).
+3. Altarek Educational Platform - A comprehensive Arabic learning management system (LMS) designed for Egyptian high school students studying Philosophy, Logic, and Psychology (React, Vite, Tailwind CSS).
+4. FORMA App - An AI-powered personal trainer and complete fitness ecosystem offering customized coaching, nutrition plans, and body scanning (Flutter, Firebase, AI Services).
+5. SOLFA web app - ML-powered educational platform.
+6. FootPrints - AI-powered Flutter shopping app.
+7. FixMate - AI assistant for machine repair technicians.
 
 Contact: aali23@alastudents.org, GitHub: github.com/albaker, LinkedIn: linkedin.com/in/albaker`;
 }

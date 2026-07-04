@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { FaComments, FaGithub, FaLock, FaExternalLinkAlt, FaCode, FaGlobe, FaMobileAlt, FaHeartbeat, FaGraduationCap } from 'react-icons/fa'
+import { FaComments, FaGithub, FaLock, FaExternalLinkAlt, FaCode, FaGlobe, FaMobileAlt, FaHeartbeat, FaGraduationCap, FaApple, FaGooglePlay } from 'react-icons/fa'
 
 const projects = [
   {
@@ -59,18 +59,51 @@ const projects = [
     category: 'Web',
   },
   {
-    title: 'EDU platfrom',
-    slug: 'education-platform',
-    description: 'A full-stack learning management system where instructors can create courses and quizzes, and students can enroll, learn, and take tests.',
+    title: 'AgencyOS',
+    slug: 'agency-os',
+    description: 'A premium internal task, project, and client management panel for high-performing marketing agencies.',
     features: [
-      'Student dashboard with course enrollment, lessons, and tests',
-      'Admin dashboard for adding courses, lessons, and quizzes',
-      'Real-time course and student statistics',
+      'Internal tasks & projects tracking board',
+      'Client database & premium admin panel',
+      'Sleek and optimized dashboard for productivity',
     ],
-    techStack: ['PHP', 'JavaScript', "supabase", 'Tailwind CSS'],
-    image: '/images/altarekv2.jpg',
+    techStack: ['Next.js', 'React', 'Tailwind CSS'],
+    image: '/images/agencyos.png',
     github: null,
-    live: "https://altarek.xyz",
+    live: 'https://www.alphagency.cloud/',
+    icon: <FaLock className="text-2xl text-red-500" />,
+    category: 'Web',
+  },
+  {
+    title: 'Lajiktech',
+    slug: 'lajiktech',
+    description: 'A youth-centered technology company bridging the digital skills gap and delivering high-quality software solutions across Africa.',
+    features: [
+      'Digital skills training and verification platform',
+      'Client-developer matching for real-world experience',
+      'Custom web and mobile app development services',
+    ],
+    techStack: ['React', 'Vite', 'Tailwind CSS'],
+    image: '/images/lajiktech.png',
+    github: null,
+    live: 'https://lajiktech.com/home',
+    icon: <FaGlobe className="text-2xl text-teal-500" />,
+    category: 'Web',
+  },
+  {
+    title: 'Altarek Educational Platform',
+    slug: 'altarek-educational-platform',
+    description: 'A comprehensive learning management system (LMS) designed for Egyptian high school students studying Philosophy, Logic, and Psychology under Dr. Tarek Ramadan.',
+    features: [
+      'Comprehensive video lessons using mental maps',
+      'Smart question bank containing thousands of assessment MCQs',
+      'Complete library of summaries, worksheets, and model solutions',
+      'Flexible chapter/semester subscriptions and parent follow-up reports',
+    ],
+    techStack: ['React', 'Vite', 'Tailwind CSS', 'IBM Plex Sans Arabic'],
+    image: '/images/altarek.png',
+    github: null,
+    live: 'https://www.altarek.xyz/',
     icon: <FaGraduationCap className="text-2xl text-indigo-500" />,
     category: 'Web',
   },
@@ -162,23 +195,6 @@ const projects = [
     category: 'Web',
   },
   {
-    title: 'AltaRek',
-    slug: 'education-platform',
-    description: 'A full-stack learning management system where instructors can create courses and quizzes, and students can enroll, learn, and take tests.',
-    features: [
-      'Student dashboard with course enrollment, lessons, and tests',
-      'Admin dashboard for adding courses, lessons, and quizzes',
-      'Real-time course and student statistics',
-    ],
-    techStack: ['PHP', 'JavaScript', 'Firebase', 'MySQL', 'HTML/CSS'],
-    image: '/images/altarek.jpg',
-    github: null,
-    live: "https://altarek.xyz",
-    icon: <FaGraduationCap className="text-2xl text-indigo-500" />,
-    category: 'Web',
-  },
-
-  {
     title: 'FootPrints Web App',
     slug: 'footprints-web-app',
     description: 'E-commerce platform for ALA’s student-led merchandise brand.',
@@ -224,6 +240,24 @@ const projects = [
     image: '/images/mobile-app.jpg',
     github: 'https://github.com/AlbakerAMA/FootPrintsApp',
     live: null,
+    icon: <FaMobileAlt className="text-2xl text-blue-500" />,
+    category: 'Mobile',
+  },
+  {
+    title: 'FORMA App',
+    slug: 'forma-app',
+    description: 'An AI-powered personal trainer and complete fitness ecosystem offering customized coaching, nutrition plans, and body scanning.',
+    features: [
+      'AI-powered workouts adapting to equipment & goals',
+      'Physique analysis and estimation of body fat/type',
+      'Custom calorie and macro tracker with meal suggestions',
+      'Bilingual support (English & Arabic) and 1-on-1 coach booking',
+    ],
+    techStack: ['Flutter', 'Firebase', 'AI Services'],
+    image: '/images/forma.png',
+    github: null,
+    appStore: 'https://apps.apple.com/eg/app/forma-train-smart/id6759920308',
+    playStore: 'https://play.google.com/store/apps/details?id=com.forma.by',
     icon: <FaMobileAlt className="text-2xl text-blue-500" />,
     category: 'Mobile',
   },
@@ -340,7 +374,29 @@ export default function ProjectsPage() {
                     <FaExternalLinkAlt /> Live Demo
                   </Link>
                 )}
-                {!project.github && !project.live && (
+                {project.appStore && (
+                  <Link
+                    href={project.appStore}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-800 text-white text-sm hover:bg-black dark:hover:bg-zinc-700 transition"
+                    aria-label={`Download ${project.title} on the App Store`}
+                  >
+                    <FaApple /> App Store
+                  </Link>
+                )}
+                {project.playStore && (
+                  <Link
+                    href={project.playStore}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 dark:bg-green-700 text-white text-sm hover:bg-green-700 dark:hover:bg-green-800 transition"
+                    aria-label={`Download ${project.title} on the Play Store`}
+                  >
+                    <FaGooglePlay /> Play Store
+                  </Link>
+                )}
+                {!project.github && !project.live && !project.appStore && !project.playStore && (
                   <Link
                     href={`/projects/${project.slug}`}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition"
