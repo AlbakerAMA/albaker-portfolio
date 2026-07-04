@@ -9,7 +9,7 @@ import { Pinecone } from '@pinecone-database/pinecone';
 const systemPrompt = `You are Albaker Ahmed's portfolio assistant. Answer questions using the provided context about Albaker's background, projects, and expertise. Keep responses professional but conversational.`;
 
 // Function to create embeddings using BAAI/bge-base-en-v1.5
-async function embedQuery(query) {
+async function embedQuery(query, signal) {
   console.log('🔍 Generating embedding for query:', query.substring(0, 50) + '...');
   
   // Use BAAI/bge-base-en-v1.5 embedding model
@@ -31,7 +31,8 @@ async function embedQuery(query) {
               wait_for_model: true,
               use_cache: true
             }
-          })
+          }),
+          signal
         }
       );
 
@@ -208,14 +209,14 @@ function generateEnhancedEmbedding(text) {
 }
 
 // Function to retrieve relevant context from Pinecone
-async function retrieveContext(query) {
+async function retrieveContext(query, signal) {
   try {
     const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
     const indexName = process.env.PINECONE_INDEX_NAME || 'albaker-portfolio';
     const index = pc.index(indexName);
     
     console.log('🔍 Creating embedding for query:', query.substring(0, 50) + '...');
-    const queryEmbedding = await embedQuery(query);
+    const queryEmbedding = await embedQuery(query, signal);
     
     console.log('🔍 Querying Pinecone index:', indexName, 'with embedding dimensions:', queryEmbedding.length);
     const results = await index.query({
@@ -269,9 +270,9 @@ Contact: aali23@alastudents.org, GitHub: github.com/albaker, LinkedIn: linkedin.
 }
 
 // Function to generate answer using OpenRouter with retrieved context
-async function generateAnswer(userQuery) {
+async function generateAnswer(userQuery, signal) {
   try {
-    const context = await retrieveContext(userQuery);
+    const context = await retrieveContext(userQuery, signal);
     
     const prompt = `${systemPrompt}\n\nContext about Albaker:\n${context}\n\nQuestion: ${userQuery}\nAnswer:`;
     
@@ -293,7 +294,8 @@ async function generateAnswer(userQuery) {
         ],
         max_tokens: 500,
         temperature: 0.7
-      })
+      }),
+      signal
     });
     
     if (response.ok) {
@@ -453,7 +455,7 @@ export async function POST(request) {
     const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout for Vercel
 
     try {
-      const reply = await generateAnswer(userQuery);
+      const reply = await generateAnswer(userQuery, controller.signal);
       clearTimeout(timeoutId);
       
       if (!reply) {
@@ -521,6 +523,36 @@ export async function POST(request) {
       nodeEnv: process.env.NODE_ENV,
       vercelUrl: process.env.VERCEL_URL
     });
+    
+    // If it's a known OpenRouter API error, parse and forward the actual status and message
+    if (error.message && error.message.includes('OpenRouter API error:')) {
+      const match = error.message.match(/OpenRouter API error: (\d+)/);
+      const status = match ? parseInt(match[1]) : 502;
+      
+      let parsedError = error.message;
+      try {
+        const jsonStr = error.message.substring(error.message.indexOf('-') + 1).trim();
+        const json = JSON.parse(jsonStr);
+        parsedError = json.error?.message || parsedError;
+      } catch (e) {}
+
+      return new Response(
+        JSON.stringify({ 
+          error: "OpenRouter API error",
+          message: parsedError,
+          timestamp: new Date().toISOString()
+        }),
+        { 
+          status,
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+          }
+        }
+      );
+    }
     
     return new Response(
       JSON.stringify({ 
